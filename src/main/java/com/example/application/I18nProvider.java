@@ -25,12 +25,16 @@ public class I18nProvider {
     public static Locale getCurrentLocale() {
         Locale locale = getLocaleFromCookie();
         if (locale == null) {
-            locale = VaadinSession.getCurrent().getLocale();
+            if (VaadinSession.getCurrent() != null) {
+                locale = VaadinSession.getCurrent().getLocale();
+            }
         }
 
         if (locale == null) {
             locale = Locale.ENGLISH;
-            VaadinSession.getCurrent().setLocale(locale);
+            if (VaadinSession.getCurrent() != null) {
+                VaadinSession.getCurrent().setLocale(locale);
+            }
         }
 
         return locale;
@@ -46,11 +50,14 @@ public class I18nProvider {
 
     public static Locale getLocaleFromCookie() {
         VaadinServletRequest request = (VaadinServletRequest) VaadinService.getCurrentRequest();
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (LOCALE_COOKIE_NAME.equals(cookie.getName())) {
-                    return Locale.forLanguageTag(cookie.getValue());
+
+        if (request != null) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (LOCALE_COOKIE_NAME.equals(cookie.getName())) {
+                        return Locale.forLanguageTag(cookie.getValue());
+                    }
                 }
             }
         }

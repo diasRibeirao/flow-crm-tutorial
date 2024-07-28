@@ -1,5 +1,6 @@
 package com.example.application.views.list;
 
+import com.example.application.I18nProvider;
 import com.example.application.data.Company;
 import com.example.application.data.Contact;
 import com.example.application.data.Status;
@@ -19,21 +20,26 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ContactForm extends FormLayout {
-  TextField firstName = new TextField("First name");
-  TextField lastName = new TextField("Last name");
-  EmailField email = new EmailField("Email");
-  ComboBox<Status> status = new ComboBox<>("Status");
-  ComboBox<Company> company = new ComboBox<>("Company");
+  TextField firstName;
+  TextField lastName;
+  EmailField email;
+  ComboBox<Status> status;
+  ComboBox<Company> company;
 
-  Button save = new Button("Save");
-  Button delete = new Button("Delete");
-  Button close = new Button("Cancel");
-  // Other fields omitted
+  Button save;
+  Button delete;
+  Button close;
+
   Binder<Contact> binder = new BeanValidationBinder<>(Contact.class);
 
   public ContactForm(List<Company> companies, List<Status> statuses) {
+    Locale userLocale = getLocale();
+
+    configureForm(userLocale);
+
     addClassName("contact-form");
     binder.bindInstanceFields(this);
 
@@ -50,6 +56,18 @@ public class ContactForm extends FormLayout {
         createButtonsLayout());
   }
 
+  private void configureForm(Locale userLocale) {
+    firstName = new TextField(I18nProvider.getTranslation("contact.form.field.firstName", userLocale));
+    lastName = new TextField(I18nProvider.getTranslation("contact.form.field.lastName", userLocale));
+    email = new EmailField(I18nProvider.getTranslation("contact.form.field.email", userLocale));
+    status = new ComboBox<>(I18nProvider.getTranslation("contact.form.field.status", userLocale));
+    company = new ComboBox<>(I18nProvider.getTranslation("contact.form.field.company", userLocale));
+
+    save = new Button(I18nProvider.getTranslation("contact.form.button.save", userLocale));
+    delete = new Button(I18nProvider.getTranslation("contact.form.button.delete", userLocale));
+    close = new Button(I18nProvider.getTranslation("contact.form.button.cancel", userLocale));
+  }
+
   private Component createButtonsLayout() {
     save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
     delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -58,26 +76,24 @@ public class ContactForm extends FormLayout {
     save.addClickShortcut(Key.ENTER);
     close.addClickShortcut(Key.ESCAPE);
 
-    save.addClickListener(event -> validateAndSave()); // <1>
-    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, binder.getBean()))); // <2>
-    close.addClickListener(event -> fireEvent(new CloseEvent(this))); // <3>
+    save.addClickListener(event -> validateAndSave());
+    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, binder.getBean())));
+    close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
-    binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid())); // <4>
+    binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
     return new HorizontalLayout(save, delete, close);
   }
 
   private void validateAndSave() {
     if(binder.isValid()) {
-      fireEvent(new SaveEvent(this, binder.getBean())); // <6>
+      fireEvent(new SaveEvent(this, binder.getBean()));
     }
   }
 
-
   public void setContact(Contact contact) {
-    binder.setBean(contact); // <1>
+    binder.setBean(contact);
   }
 
-  // Events
   public static abstract class ContactFormEvent extends ComponentEvent<ContactForm> {
     private Contact contact;
 
@@ -120,7 +136,6 @@ public class ContactForm extends FormLayout {
   public Registration addCloseListener(ComponentEventListener<CloseEvent> listener) {
     return addListener(CloseEvent.class, listener);
   }
-
 
 }
 

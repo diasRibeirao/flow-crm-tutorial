@@ -1,5 +1,6 @@
 package com.example.application.views.list;
 
+import com.example.application.I18nProvider;
 import com.example.application.data.Contact;
 import com.example.application.services.CrmService;
 import com.example.application.views.MainLayout;
@@ -51,9 +52,9 @@ public class ListView extends VerticalLayout {
     private void configureForm() {
         form = new ContactForm(service.findAllCompanies(), service.findAllStatuses());
         form.setWidth("25em");
-        form.addSaveListener(this::saveContact); // <1>
-        form.addDeleteListener(this::deleteContact); // <2>
-        form.addCloseListener(e -> closeEditor()); // <3>
+        form.addSaveListener(this::saveContact);
+        form.addDeleteListener(this::deleteContact);
+        form.addCloseListener(e -> closeEditor());
     }
 
     private void saveContact(ContactForm.SaveEvent event) {
@@ -71,9 +72,27 @@ public class ListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("firstName", "lastName", "email");
-        grid.addColumn(contact -> contact.getStatus().getName()).setHeader("Status");
-        grid.addColumn(contact -> contact.getCompany().getName()).setHeader("Company");
+        grid.setColumns();
+        grid.addColumn(contact -> contact.getFirstName())
+                .setHeader(I18nProvider.getTranslation("contacts.column.firstName"))
+                .setKey("firstName")
+                .setSortable(true);
+        grid.addColumn(contact -> contact.getLastName())
+                .setHeader(I18nProvider.getTranslation("contacts.column.lastName"))
+                .setKey("lastName")
+                .setSortable(true);
+        grid.addColumn(contact -> contact.getEmail())
+                .setHeader(I18nProvider.getTranslation("contacts.column.email"))
+                .setKey("email")
+                .setSortable(true);
+        grid.addColumn(contact -> contact.getStatus().getName())
+                .setHeader(I18nProvider.getTranslation("contacts.column.status"))
+                .setKey("Status")
+                .setSortable(true);
+        grid.addColumn(contact -> contact.getCompany().getName())
+                .setHeader(I18nProvider.getTranslation("contacts.column.company"))
+                .setKey("Company")
+                .setSortable(true);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event ->
@@ -81,12 +100,12 @@ public class ListView extends VerticalLayout {
     }
 
     private Component getToolbar() {
-        filterText.setPlaceholder("Filter by name...");
+        filterText.setPlaceholder(I18nProvider.getTranslation("contacts.filter.by.name"));
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addContactButton = new Button("Add contact");
+        Button addContactButton = new Button(I18nProvider.getTranslation("contacts.add.contact"));
         addContactButton.addClickListener(click -> addContact());
 
         var toolbar = new HorizontalLayout(filterText, addContactButton);

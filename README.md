@@ -1,17 +1,11 @@
-# Spring Boot and Vaadin course source code
+# Código fonte do curso Spring Boot e VaadinCódigo fonte do curso Spring Boot e Vaadin
 
-This repository contains the source code for the [Building Modern Web Applications With Spring Boot and Vaadin](https://vaadin.com/docs/latest/flow/tutorials/in-depth-course).
+Este repositório contém o código fonte para o [Construindo Aplicações Web Modernas com Spring Boot e Vaadin](https://vaadin.com/docs/latest/flow/tutorials/in-depth-course).
 
-*Live demo:* https://crm.demo.vaadin.com
+*Demonstração ao vivo:* https://crm.demo.vaadin.com
 
-## Running the Application
-There are two ways to run the application:  using `mvn` or by running the `Application` class directly from your IDE.
+## Executando o aplicativo
+Há duas maneiras de executar o aplicativo: usando `mvn` ou executando a classe `Application` diretamente do seu IDE.
 
-## Branches
-
-- The main branch contains the source code for the latest Vaadin release
-- The `v14` branch contains the source code for Vaadin 14
-
-
-## Text tutorial
-You can find a text version of the tutorial in the [Vaadin Documentation](https://vaadin.com/docs/latest/flow/tutorials/in-depth-course).
+## Tutorial em texto
+Você pode encontrar uma versão em texto do tutorial no [Vaadin Documentation](https://vaadin.com/docs/latest/flow/tutorials/in-depth-course).

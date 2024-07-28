@@ -1,4 +1,4 @@
-# Código fonte do curso Spring Boot e VaadinCódigo fonte do curso Spring Boot e Vaadin
+# Código fonte do curso Spring Boot e Vaadin
 
 Este repositório contém o código fonte para o [Construindo Aplicações Web Modernas com Spring Boot e Vaadin](https://vaadin.com/docs/latest/flow/tutorials/in-depth-course).
 

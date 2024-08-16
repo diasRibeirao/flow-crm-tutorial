@@ -133,8 +133,6 @@ public class ListView extends VerticalLayout {
         grid.asSingleSelect().clear();
         editContact(new Contact());
     }
-
-
     private void updateList() {
         grid.setItems(service.findAllContacts(filterText.getValue()));
     }

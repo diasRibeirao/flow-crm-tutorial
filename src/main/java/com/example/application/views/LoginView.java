@@ -4,6 +4,8 @@ import com.example.application.I18nProvider;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -21,20 +23,19 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 	private final LoginForm login;
 
 	public LoginView(){
-		login = new LoginForm();
-		login.setI18n(createLoginI18n());
-
 		addClassName("login-view");
-		setSizeFull(); 
+		setSizeFull();
 		setAlignItems(Alignment.CENTER);
 		setJustifyContentMode(JustifyContentMode.CENTER);
 
-		login.setAction("login");
-		H1 title = new H1(I18nProvider.getTranslation("login.title"));
-		title.addClassName("login-view-title");
-		add(title);
+		add(new H2(I18nProvider.getTranslation("login.title")));
 
 		createCredentialsLayout();
+
+		login = new LoginForm();
+		login.setI18n(createLoginI18n());
+		login.setAction("login");
+		login.setForgotPasswordButtonVisible(false);
 
 		add(login);
 	}
@@ -61,27 +62,25 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 	}
 
 	private void createCredentialsLayout() {
-
 		Html title = new Html("<div>" + I18nProvider.getTranslation("login.credentials.message") + "</div>");
 
-		Div ul = new Div();
-		ul.getElement().setProperty("innerHTML", "<ul></ul>");
+		Div credentialsList = new Div();
+		credentialsList.addClassName("credentials-list");
 
-		ul.getElement().executeJs("this.firstElementChild.innerHTML += '<li>" +  I18nProvider.getTranslation("login.credentials.user") + "</li>'");
-		ul.getElement().executeJs("this.firstElementChild.innerHTML += '<li>" +  I18nProvider.getTranslation("login.credentials.admin") + "</li>'");
+		credentialsList.add(
+				new Span(new Html("<div>" + I18nProvider.getTranslation("login.credentials.user") + "</div>")),
+				new Span(new Html("<div>" + I18nProvider.getTranslation("login.credentials.admin") + "</div>"))
+		);
 
-		add(title, ul);
+		add(title, credentialsList);
 	}
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 		// inform the user about an authentication error
-		if(beforeEnterEvent.getLocation()
-        .getQueryParameters()
-        .getParameters()
-        .containsKey("error")) {
-            login.setError(true);
-        }
+		if(beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error")) {
+			login.setError(true);
+		}
 	}
 
 

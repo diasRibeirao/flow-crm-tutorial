@@ -19,6 +19,10 @@ Este repositório contém o código fonte para o [Construindo Aplicações Web M
   # Instalar as dependências:
   $ mvn clean install 
   
+  # Caso ocorra erro na instrução acima, ex: Erro de licença
+  # Instalar as dependências:
+  $ mvn install -DskipTests
+  
   # Rodar diretamente do seu IDE:
   $ Executar a classe Application
 

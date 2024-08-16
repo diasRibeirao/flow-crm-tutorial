@@ -34,8 +34,8 @@ public class MainLayout extends AppLayout {
     private void createHeader() {
         H1 logo = new H1("Vaadin CRM");
         logo.addClassNames(
-            LumoUtility.FontSize.LARGE,
-            LumoUtility.Margin.MEDIUM);
+                LumoUtility.FontSize.LARGE,
+                LumoUtility.Margin.MEDIUM);
 
         HorizontalLayout header = null;
         if (securityService.getAuthenticatedUser() == null) {
@@ -43,7 +43,6 @@ public class MainLayout extends AppLayout {
         } else {
             String u = securityService.getAuthenticatedUser().getUsername();
             Button logout = new Button(I18nProvider.getTranslation("main.logout") + " " + u, e -> securityService.logout()); // <2>
-
             header = new HorizontalLayout(new DrawerToggle(), logo, createLocaleSelector(), logout);
         }
 
@@ -51,8 +50,8 @@ public class MainLayout extends AppLayout {
         header.expand(logo);
         header.setWidthFull();
         header.addClassNames(
-            LumoUtility.Padding.Vertical.NONE,
-            LumoUtility.Padding.Horizontal.MEDIUM);
+                LumoUtility.Padding.Vertical.NONE,
+                LumoUtility.Padding.Horizontal.MEDIUM);
         header.addClassName("header-view");
         addToNavbar(header);
     }

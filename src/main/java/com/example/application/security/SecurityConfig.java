@@ -41,15 +41,4 @@ public class SecurityConfig extends VaadinWebSecurity { // <2>
                 .build();
         return new InMemoryUserDetailsManager(user, admin); // <5>
     }
-
-//    @Bean
-//    public MessageSource messageSource() {
-//        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-//        System.out.println("ENTROU MessageSource --------------");
-//        messageSource.setBasename("classpath:i18n/languages");
-//        messageSource.setUseCodeAsDefaultMessage(true);
-//        messageSource.setDefaultEncoding("UTF-8");
-//        return null; //messageSource;
-//    }
-
 }

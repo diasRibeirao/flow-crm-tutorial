@@ -17,6 +17,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.internal.LocaleUtil;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
@@ -36,7 +37,12 @@ public class ContactForm extends FormLayout {
   Binder<Contact> binder = new BeanValidationBinder<>(Contact.class);
 
   public ContactForm(List<Company> companies, List<Status> statuses) {
-    Locale userLocale = getLocale();
+    Locale userLocale = null;
+    try {
+      userLocale = getLocale();
+    } catch (Exception e) {
+      userLocale = new Locale("pt", "BR");
+    }
 
     configureForm(userLocale);
 
@@ -49,11 +55,11 @@ public class ContactForm extends FormLayout {
     status.setItemLabelGenerator(Status::getName);
 
     add(firstName,
-        lastName,
-        email,
-        company,
-        status,
-        createButtonsLayout());
+            lastName,
+            email,
+            company,
+            status,
+            createButtonsLayout());
   }
 
   private void configureForm(Locale userLocale) {
@@ -138,4 +144,3 @@ public class ContactForm extends FormLayout {
   }
 
 }
-

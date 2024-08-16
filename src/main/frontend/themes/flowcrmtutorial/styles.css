@@ -4,8 +4,37 @@
     display: none;
   }
 }
+
 a[highlight] {
     font-weight: bold;
     text-decoration: underline;
+}
+
+.login-view {
+    padding-top: 30px;
+    position: relative;
+}
+
+.credentials-list {
+    padding: 0;
+    margin: 0;
+}
+
+.credentials-list span {
+    display: block;
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 20px; /* Espaço para o marcador */
+}
+
+.credentials-list span::before {
+    content: '•'; /* O marcador ponto */
+    position: absolute;
+    left: 0; /* Alinha o marcador à esquerda */
+    top: 50%; /* Centraliza verticalmente */
+    transform: translateY(-50%); /* Ajusta para centralizar verticalmente */
+    color: black; /* Cor do marcador */
+    font-size: 20px; /* Tamanho do marcador */
+    line-height: 1;
 }
 

@@ -34,8 +34,8 @@ public class DashboardView extends VerticalLayout {
     private Component getContactStats(Locale userLocale) {
         Span stats = new Span(service.countContacts() + " " + I18nProvider.getTranslation("dashboard.contacts", userLocale));
         stats.addClassNames(
-            LumoUtility.FontSize.XLARGE,
-            LumoUtility.Margin.Top.MEDIUM);
+                LumoUtility.FontSize.XLARGE,
+                LumoUtility.Margin.Top.MEDIUM);
         return stats;
     }
 
@@ -44,7 +44,7 @@ public class DashboardView extends VerticalLayout {
 
         DataSeries dataSeries = new DataSeries();
         service.findAllCompanies().forEach(company ->
-            dataSeries.add(new DataSeriesItem(company.getName(), company.getEmployeeCount()))); // <5>
+                dataSeries.add(new DataSeriesItem(company.getName(), company.getEmployeeCount()))); // <5>
         chart.getConfiguration().setSeries(dataSeries);
         return chart;
     }
